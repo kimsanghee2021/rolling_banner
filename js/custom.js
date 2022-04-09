@@ -5,21 +5,21 @@ let timer = null;
 
 
 
-// timer = setInterval(move, 10);
+timer = setInterval(move, 10);
 
-// list.addEventListener('mouseenter',()=>{clearInterval(timer)});
+list.addEventListener('mouseenter',()=>{clearInterval(timer)});
 
-// list.addEventListener('mouseleave',()=>{timer = setInterval(move, 10)});
+list.addEventListener('mouseleave',()=>{timer = setInterval(move, 10)});
 
-// function move() {
-// 	if (num < -240) {
-// 		num = 0;
-// 		list.append(list.firstElementChild);
-// 	} else {
-// 		num -= 2;
-// 	}
-// 	list.style.marginLeft = num + '00‚px';
-// }
+function move() {
+	if (num < -240) {
+		num = 0;
+		list.append(list.firstElementChild);
+	} else {
+		num -= 2;
+	}
+	list.style.marginLeft = num + 'px';
+}
 createList('data.json');
 function createList(url){
 	fetch(url)
@@ -34,19 +34,18 @@ function createList(url){
 	.then((json)=>{
 		console.log(json);
 		const arr = json.imgSrc;
-		let tags ='';
-		console.log(arr);
 
-		arr.forEach(function(el,idx){
-			tags +=`
-				<li>
-					<a href=${el.pic}>
-						<img src=${el.thumb}/>
-					</a>
-				</li>
-			`
+		arr.forEach((item,idx)=>{
+			const li = document.createElement('li');
+			const a = document.createElement('a');
+			const img = document.createElement('img');
+			a.setAttribute('src',item.pic);
+			img.setAttribute('src',item.thumb);
+			list.append(li);
+			li.append(a);
+			a.append(img);
+
 		});
-		list.innerHTML = tags;
 	});
 
 
